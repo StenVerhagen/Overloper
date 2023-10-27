@@ -4,8 +4,8 @@ class Bom {
   constructor() {
     this.x = floor(random(9,raster.aantalKolommen))*raster.celGrootte;
     this.y = floor(random(1,12,raster.aantalRijen))*raster.celGrootte;
-    this.snelheid =  7;
-    this.yRichting = 7;
+    this.snelheid =  random(2 ,5);
+    this.yRichting = 5;
   }
   
   beweeg() {
@@ -37,17 +37,19 @@ class Raster {
   teken() {
     push();
     noFill();
-    stroke('purple');
+    stroke('white');
     for (var rij = 0;rij < this.aantalRijen;rij++) {
       for (var kolom = 0;kolom < this.aantalKolommen;kolom++) {
         if (rij === this.oranjeRegel - 12 || kolom ===
-            this.oranjeRegel +5) 
+            this.oranjeRegel -12) 
         {
-          fill ('orange');
+          fill ('blue');
         } else(
           noFill()
         )
-          rect(kolom*this.celGrootte,rij*this.celGrootte,this.celGrootte,this.celGrootte);
+          
+// Hierboven hebben we een stukje code die ervoor zorgt dat het raster donkergrijs is en de 2 balken bruin zijn.
+        rect(kolom*this.celGrootte,rij*this.celGrootte,this.celGrootte,this.celGrootte);
       }
     }
     pop();
@@ -63,6 +65,8 @@ class Jos {
     this.stapGrootte = null;
     this.gehaald = false;
   }
+
+// Hierboven wordt het poppetje jos wat bij ons het bankrovertje is gegenereert.
   
   beweeg() {
     if (keyIsDown(65)) {
@@ -81,6 +85,8 @@ class Jos {
       this.y += this.stapGrootte;
       this.frameNummer = 5;
     }
+
+// Hierboven zie je dat wij de bestuurstoetsen hebben veranderd van de pijltjes naar WASD door hun nummers in te vullen.
     
     this.x = constrain(this.x,0,canvas.width);
     this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
@@ -153,8 +159,8 @@ toon(){
 }
 
 function preload() {
-  brug = loadImage("Sick.jpg");
-  bomPlaatje = loadImage("Nuk 10.png");
+  brug = loadImage("background.jpg");
+  bomPlaatje = loadImage("Bom bird.png");
 }
 
 var bommenArray = [];
@@ -179,7 +185,7 @@ function setup() {
   eve = new Jos();
   eve.stapGrootte = 1*raster.celGrootte;
   for (var b = 0;b < 6;b++) {
-    frameEve = loadImage("images/sprites/diefspel.png");
+    frameEve = loadImage("red 2.png");
     eve.animatie.push(frameEve);
   }
 
@@ -188,15 +194,15 @@ function setup() {
 
   alice = new Vijand(700,200);
   alice.stapGrootte = 1*eve.stapGrootte;
-  alice.sprite = loadImage("images/sprites/politiespel.png");
+  alice.sprite = loadImage("Koning.png");
 
   bob = new Vijand(600,400);
   bob.stapGrootte = 1*eve.stapGrootte;
-  bob.sprite = loadImage("images/sprites/politiespel.png");  
+  bob.sprite = loadImage("Koning.png");  
 
   jan = new Vijand(600,400);
   jan.stapGrootte = 1*eve.stapGrootte;
-  jan.sprite = loadImage("images/sprites/politiespel.png");  
+  jan.sprite = loadImage("Koning.png");  
 }
 
 function draw() {
@@ -226,13 +232,11 @@ function draw() {
 
   fill ('white');
   textSize(50);
-  text("Levens over:" + playerleven, 50, 50);
+  text("Levens over:" + playerleven, 20, 50);
   
   if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob) || eve.wordtGeraakt(jan) || eve.wordtGeraakt(bomba1) || eve.wordtGeraakt(bomba2) || eve.wordtGeraakt(bomba3) || eve.wordtGeraakt(bomba4) || eve.wordtGeraakt(bomba5) || eve.wordtGeraakt(bomba6)) {
     playerleven -= 1;
 if (playerleven <= 0){
-  
-    
     background("red")
     fill ("black")    
     textSize(250);
@@ -241,15 +245,16 @@ if (playerleven <= 0){
   }
   }
   
- if (!extraLife.collected && dist(eve.x, eve.y, extraLife.x, extraLife.y) < raster.celGrootte) {
-   extraLife.collected = true;
+  if (!extraLife.collected && dist(eve.x, eve.y, extraLife.x, extraLife.y) < raster.celGrootte) {
+    extraLife.collected = true;
+    playerleven++;
   }
 
   if (eve.gehaald) {
     background('green');
     fill('white');
     textSize(95);
-    text("Bartje voor de winst!",10,340);
+    text("Gefeliciteerd!",155,340);
     noLoop();
   }
 }

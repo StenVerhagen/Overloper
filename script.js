@@ -1,11 +1,11 @@
-var  playerleven = 5;
+var  playerleven = 1;
 
 class Bom {
   constructor() {
     this.x = floor(random(9,raster.aantalKolommen))*raster.celGrootte;
     this.y = floor(random(1,12,raster.aantalRijen))*raster.celGrootte;
-    this.snelheid =  5;
-    this.yRichting = 5;
+    this.snelheid =  7;
+    this.yRichting = 7;
   }
   
   beweeg() {
@@ -37,10 +37,12 @@ class Raster {
   teken() {
     push();
     noFill();
-    stroke('black');
+    stroke('purple');
     for (var rij = 0;rij < this.aantalRijen;rij++) {
       for (var kolom = 0;kolom < this.aantalKolommen;kolom++) {
-        if (rij === this.oranjeRegel - 1 || kolom === this.oranjeRegel -12) {
+        if (rij === this.oranjeRegel - 12 || kolom ===
+            this.oranjeRegel +5) 
+        {
           fill ('orange');
         } else(
           noFill()
@@ -151,8 +153,8 @@ toon(){
 }
 
 function preload() {
-  brug = loadImage("images/backgrounds/skyline_1.jpg");
-  bomPlaatje = loadImage("images/sprites/bom_100px.png");
+  brug = loadImage("Sick.jpg");
+  bomPlaatje = loadImage("Nuk 10.png");
 }
 
 var bommenArray = [];
@@ -172,11 +174,12 @@ function setup() {
   bomba3 = new Bom();
   bomba4 = new Bom();
   bomba5 = new Bom();
+  bomba6 = new Bom();
   
   eve = new Jos();
   eve.stapGrootte = 1*raster.celGrootte;
   for (var b = 0;b < 6;b++) {
-    frameEve = loadImage("images/sprites/roodborstje_R.png");
+    frameEve = loadImage("images/sprites/diefspel.png");
     eve.animatie.push(frameEve);
   }
 
@@ -185,11 +188,15 @@ function setup() {
 
   alice = new Vijand(700,200);
   alice.stapGrootte = 1*eve.stapGrootte;
-  alice.sprite = loadImage("images/sprites/Alice100px/Alice.png");
+  alice.sprite = loadImage("images/sprites/politiespel.png");
 
   bob = new Vijand(600,400);
   bob.stapGrootte = 1*eve.stapGrootte;
-  bob.sprite = loadImage("images/sprites/Bob100px/Bob.png");  
+  bob.sprite = loadImage("images/sprites/politiespel.png");  
+
+  jan = new Vijand(600,400);
+  jan.stapGrootte = 1*eve.stapGrootte;
+  jan.sprite = loadImage("images/sprites/politiespel.png");  
 }
 
 function draw() {
@@ -198,26 +205,30 @@ function draw() {
   eve.beweeg();
   alice.beweeg();
   bob.beweeg();
+  jan.beweeg();
   bomba1.beweeg();
   bomba2.beweeg();
   bomba3.beweeg();
   bomba4.beweeg();
   bomba5.beweeg();
+  bomba6.beweeg();
   eve.toon();
   alice.toon();
   bob.toon();
+  jan.toon();
   extraLife.toon();
   bomba1.toon();
   bomba2.toon();
   bomba3.toon();
   bomba4.toon();
   bomba5.toon();
+  bomba6.toon();
 
   fill ('white');
   textSize(50);
-  text("Levens:" + playerleven, 50, 50);
+  text("Levens over:" + playerleven, 50, 50);
   
-  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob) || eve.wordtGeraakt(bomba1) || eve.wordtGeraakt(bomba2) || eve.wordtGeraakt(bomba3) || eve.wordtGeraakt(bomba4) || eve.wordtGeraakt(bomba5)) {
+  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob) || eve.wordtGeraakt(jan) || eve.wordtGeraakt(bomba1) || eve.wordtGeraakt(bomba2) || eve.wordtGeraakt(bomba3) || eve.wordtGeraakt(bomba4) || eve.wordtGeraakt(bomba5) || eve.wordtGeraakt(bomba6)) {
     playerleven -= 1;
 if (playerleven <= 0){
   

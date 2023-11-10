@@ -4,7 +4,7 @@ class Bom {
   constructor() {
     this.x = floor(random(9,raster.aantalKolommen))*raster.celGrootte;
     this.y = floor(random(1,12,raster.aantalRijen))*raster.celGrootte;
-    this.snelheid =  random(2 ,5);
+    this.snelheid =  random(5 ,5);
     this.yRichting = 5;
   }
   
@@ -21,6 +21,8 @@ class Bom {
     image(bomPlaatje,this.x,this.y,raster.celGrootte,raster.celGrootte);
   }
 }
+
+// Hierboven staat de klasse bom. 
 
 class Raster {
   constructor(r,k) {
@@ -48,7 +50,7 @@ class Raster {
           noFill()
         )
           
-// Hierboven hebben we een stukje code die ervoor zorgt dat het raster donkergrijs is en de 2 balken bruin zijn.
+// Hierboven hebben we een stukje code die ervoor zorgt dat het raster wit is en de 2 balken blauw zijn.
         rect(kolom*this.celGrootte,rij*this.celGrootte,this.celGrootte,this.celGrootte);
       }
     }
@@ -66,7 +68,7 @@ class Jos {
     this.gehaald = false;
   }
 
-// Hierboven wordt het poppetje jos wat bij ons het bankrovertje is gegenereert.
+// Hierboven wordt het poppetje jos, wat bij ons de rode angry bird is, gegenereert.
   
   beweeg() {
     if (keyIsDown(65)) {
@@ -133,9 +135,9 @@ class ExtraLife {
   }
 }
 
-let extraLife;
+var extraLife;
 
-
+//Hierboven wordt een klasse voor een extra leven toegepast, bij ons is dat de powerpotion.
 
 class Vijand {
   constructor(x,y) {
@@ -162,6 +164,7 @@ function preload() {
   brug = loadImage("background.jpg");
   bomPlaatje = loadImage("Bom bird.png");
 }
+//Hier veranderen wij het plaatje van de bommen en de achtergrond.
 
 var bommenArray = [];
 
@@ -173,6 +176,7 @@ function setup() {
   textSize(90);
   
   raster = new Raster(12,18);
+ // Hier passen wij het raster aan naar 12,18.
   
   raster.berekenCelGrootte();
   bomba1 = new Bom();
@@ -181,6 +185,8 @@ function setup() {
   bomba4 = new Bom();
   bomba5 = new Bom();
   bomba6 = new Bom();
+
+//Hierboven worden Bommen uit Class Bom die bovenaan de code staat gekopieert en er 6 van geplaatst.
   
   eve = new Jos();
   eve.stapGrootte = 1*raster.celGrootte;
@@ -188,10 +194,12 @@ function setup() {
     frameEve = loadImage("red 2.png");
     eve.animatie.push(frameEve);
   }
-
+//Hierboven hebben wij het plaatje van de Jos aangepast.
+  
   extraLife = new ExtraLife();
-  extraLife.sprite = loadImage("images/sprites/appel_2.png");
-
+  extraLife.sprite = loadImage("images/sprites/PowerPotion.png");
+//Hierboven hebben wij het plaatje van de appel/extra leven aangepast.
+  
   alice = new Vijand(700,200);
   alice.stapGrootte = 1*eve.stapGrootte;
   alice.sprite = loadImage("Koning.png");
@@ -203,6 +211,7 @@ function setup() {
   jan = new Vijand(600,400);
   jan.stapGrootte = 1*eve.stapGrootte;
   jan.sprite = loadImage("Koning.png");  
+//Hierboven hebben wij hebben wij de plaatjes van de vijanden aangepast. Ook voor de extra vijand die wij toegevoegd hebben.
 }
 
 function draw() {
@@ -230,6 +239,8 @@ function draw() {
   bomba5.toon();
   bomba6.toon();
 
+// Hierboven wordt ervoor gezorgd dat alle tastbare/bewegende elementen uit het spel getoond worden.
+  
   fill ('white');
   textSize(50);
   text("Levens over:" + playerleven, 20, 50);
@@ -239,11 +250,14 @@ function draw() {
 if (playerleven <= 0){
     background("red")
     fill ("black")    
-    textSize(250);
-    text ("Loser!!!",10,375)
+    textSize(110);
+    text ("Helaas, verloren!",30,330)
     noloop();
   }
   }
+
+//Hierboven word gezorgd dat wanneer eve word geraakt door een van de mobs (alice, bob, jan en bomba 1t/m6) er een leven af gaat en wanneer je 0 levens over hebt je af bent en het verliezers scherm wordt getoond. 
+
   
   if (!extraLife.collected && dist(eve.x, eve.y, extraLife.x, extraLife.y) < raster.celGrootte) {
     extraLife.collected = true;
@@ -257,4 +271,7 @@ if (playerleven <= 0){
     text("Gefeliciteerd!",155,340);
     noLoop();
   }
+
+  // Hierbiven geven wij een passende boodschap wanneer je wint of verliest.
+  
 }
